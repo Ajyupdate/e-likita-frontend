@@ -410,28 +410,36 @@ export default function Step5Summary() {
         </div>
       </div>
 
-      <div className="flex items-center justify-between pt-6 border-t border-gray-200 dark:border-gray-700">
+      {/* Button container - responsive layout */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-0 pt-6 border-t border-gray-200 dark:border-gray-700">
+        {/* Back button */}
         <button 
           onClick={() => setStep(5)} 
-          className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+          className="inline-flex items-center justify-center gap-2 px-4 py-3 sm:py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors order-3 sm:order-1"
         >
           ← Back
         </button>
-        <div className="flex gap-3">
+        
+        {/* Action buttons */}
+        <div className="flex flex-col sm:flex-row gap-3 order-1 sm:order-2">
           <button 
             onClick={downloadPdf} 
-            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+            className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 py-3 rounded-lg font-medium transition-colors min-h-[48px] sm:min-h-0"
           >
-            📄 Print/Save Summary
+            <span className="text-lg sm:hidden">📄</span>
+            <span className="hidden sm:inline">📄 Print/Save Summary</span>
+            <span className="sm:hidden">Print/Save</span>
           </button>
           <button 
             onClick={() => {
               localStorage.removeItem('consultation-progress');
               window.location.href = '/consultation';
             }}
-            className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+            className="inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 sm:px-6 py-3 rounded-lg font-medium transition-colors min-h-[48px] sm:min-h-0"
           >
-            🔄 Start New Consultation
+            <span className="text-lg sm:hidden">🔄</span>
+            <span className="hidden sm:inline">🔄 Start New Consultation</span>
+            <span className="sm:hidden">New Consultation</span>
           </button>
         </div>
       </div>

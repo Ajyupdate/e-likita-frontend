@@ -26,11 +26,7 @@ export default function Consultation() {
       <main className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
         {/* Debug info */}
     
-        {mounted && (
-          <div className="fixed top-20 left-4 bg-blue-500 text-white p-2 rounded text-xs z-50">
-            Consultation Theme: {resolvedTheme} | HTML dark: {document.documentElement.classList.contains('dark') ? 'YES' : 'NO'}
-          </div>
-        )}
+      
         <div className="max-w-5xl mx-auto px-6 py-10">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Consultation</h1>

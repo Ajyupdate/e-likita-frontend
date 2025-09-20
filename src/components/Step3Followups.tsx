@@ -73,20 +73,33 @@ export default function Step4Followups() {
           </div>
         ))
       )}
-      <div className="flex items-center justify-between">
-        <button onClick={()=>setStep(3)} className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">← Back</button>
+      {/* Button container - responsive layout */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-0 pt-4">
+        {/* Back button */}
+        <button 
+          onClick={() => setStep(3)} 
+          className="inline-flex items-center justify-center gap-2 px-4 py-3 sm:py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors order-2 sm:order-1"
+        >
+          ← Back
+        </button>
+        
+        {/* Complete assessment button */}
         <button 
           onClick={handleSubmitConsultation}
           disabled={isSubmitting}
-          className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors"
+          className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors order-1 sm:order-2 min-h-[48px] sm:min-h-0"
         >
           {isSubmitting ? (
             <>
               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-              Processing...
+              <span className="hidden xs:inline">Processing...</span>
+              <span className="xs:hidden">Processing</span>
             </>
           ) : (
-            <>Complete Assessment →</>
+            <>
+              <span className="hidden sm:inline">Complete Assessment →</span>
+              <span className="sm:hidden">Complete Assessment</span>
+            </>
           )}
         </button>
       </div>

@@ -8,7 +8,7 @@ export default function Home() {
   return (
     // Change from bg-gray-50 dark:bg-gray-900 to explicit Tailwind classes
     <main className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-200">
-      <DarkModeDebug/>
+     
       
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="text-center">
