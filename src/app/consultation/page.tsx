@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
 import { ConsultationProvider } from "@/context/ConsultationContext";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 import StepIndicator from "@/components/StepIndicator";
 import Step1Intro from "@/components/Step1Intro";
 import Step2PatientForm from "@/components/Step1PatientForm";
@@ -9,11 +11,23 @@ import Step4Followups from "@/components/Step3Followups";
 import Step5Summary from "@/components/Step5Summary";
 import { useConsultation } from "@/context/ConsultationContext";
 import { AnimatePresence, motion } from "framer-motion";
+import DarkModeTest from "../darkmode/page";
 
 export default function Consultation() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <ConsultationProvider>
-      <main className="max-w-5xl mx-auto px-6 py-10">
+      <main className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+        {/* Debug info */}
+    
+      
+        <div className="max-w-5xl mx-auto px-6 py-10">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Consultation</h1>
           <Link href="/" className="text-sm text-blue-600 hover:underline">Back to Home</Link>
@@ -21,8 +35,9 @@ export default function Consultation() {
         <div className="mt-6">
           <StepIndicator />
         </div>
-        <div className="mt-8 rounded-lg border border-gray-200 dark:border-gray-800 p-6 bg-white dark:bg-gray-900">
+        <div className="mt-8 rounded-lg border border-gray-200 dark:border-gray-800 p-6 bg-white dark:bg-gray-800">
           <WizardBody />
+        </div>
         </div>
       </main>
     </ConsultationProvider>

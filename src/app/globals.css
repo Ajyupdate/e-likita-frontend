@@ -1,37 +1,32 @@
+
+/* globals.css - WORKING TAILWIND V4 VERSION */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #0f172a; /* slate-900 */
-  --brand: #0ea5e9; /* sky-500 */
-  --brand-600: #0284c7; /* sky-600 */
-  --muted: #64748b; /* slate-500 */
+/* Tailwind v4 configuration */
+@theme {
+  --default-transition-duration: 200ms;
+  --default-transition-timing-function: ease-in-out;
+  
+  /* Font families */
+  --font-family-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-family-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Force dark mode support - this might be the missing piece */
+@variant dark (.dark &);
+
+/* Smooth transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0b1220; /* deep navy */
-    --foreground: #e2e8f0; /* slate-200 */
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-}
-
+/* Your custom styles */
 .btn {
-  @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition;
+  @apply inline-flex items-center justify-center rounded-md text-sm font-medium;
 }
+
 .btn-primary {
-  background-color: var(--brand);
-  color: white;
+  @apply bg-blue-500 hover:bg-blue-600 text-white;
 }
-.btn-primary:hover { background-color: var(--brand-600); }

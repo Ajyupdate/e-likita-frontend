@@ -7,40 +7,223 @@ export default function Step5Summary() {
 
   function downloadPdf() {
     const doc = new jsPDF();
-    doc.setFontSize(16);
-    doc.text("e-Likita Consultation Summary", 14, 20);
+    let yPosition = 20;
     
-    doc.setFontSize(12);
-    doc.text("Patient Information", 14, 35);
+    // Header with blue color
+    doc.setTextColor(0, 102, 204); // Blue color
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    doc.text("e-Likita Medical Consultation Report", 14, yPosition);
+    yPosition += 15;
+
+    doc.setTextColor(128, 128, 128); // Gray color
     doc.setFontSize(10);
-    doc.text(`Name: ${patient.fullName}`, 20, 45);
-    doc.text(`Gender: ${patient.gender || 'Not specified'}`, 20, 52);
-    doc.text(`Age: ${patient.age || 'Not specified'}`, 20, 59);
-    doc.text(`Phone: ${patient.phone || 'Not specified'}`, 20, 66);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Generated: ${new Date().toLocaleString()}`, 14, yPosition);
+    yPosition += 20;
     
-    doc.setFontSize(12);
-    doc.text("Symptoms Reported", 14, 80);
+    // Patient Information Section
+    doc.setTextColor(0, 102, 204); // Blue color for section headers
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("Patient Information", 14, yPosition);
+    yPosition += 10;
+    
+    doc.setTextColor(0, 0, 0); // Black color for content
     doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Name: ${patient.fullName || 'Not provided'}`, 20, yPosition);
+    yPosition += 7;
+    doc.text(`Age: ${patient.age || 'Not specified'}`, 20, yPosition);
+    yPosition += 7;
+    doc.text(`Gender: ${patient.gender || 'Not specified'}`, 20, yPosition);
+    yPosition += 7;
+    doc.text(`Phone: ${patient.phone || 'Not specified'}`, 20, yPosition);
+    yPosition += 7;
+    
+    if (patient.medicalHistory && patient.medicalHistory.length > 0) {
+      doc.text(`Medical History: ${patient.medicalHistory.join(', ')}`, 20, yPosition);
+      yPosition += 7;
+    }
+    
+    if (patient.medications) {
+      doc.text(`Current Medications: ${patient.medications}`, 20, yPosition);
+      yPosition += 7;
+    }
+    yPosition += 10;
+    
+    // Symptoms Section
+    doc.setTextColor(0, 102, 204); // Blue color for section headers
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("Symptoms Reported", 14, yPosition);
+    yPosition += 10;
+    
+    doc.setTextColor(0, 0, 0); // Black color for content
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
     if (selectedSymptoms.length > 0) {
-      doc.text(`Symptoms: ${selectedSymptoms.join(', ')}`, 20, 90);
-      doc.text(`Severity: ${symptomDetails.severity || 'Not specified'}/10`, 20, 97);
-      doc.text(`Duration: ${symptomDetails.duration || 'Not specified'}`, 20, 104);
-    } else {
-      doc.text("No symptoms reported", 20, 90);
-    }
-    
-    if (riskResult) {
-      doc.setFontSize(12);
-      doc.text("Risk Assessment", 14, 120);
-      doc.setFontSize(10);
-      doc.text(`Risk Level: ${riskResult.level}`, 20, 130);
-      if (riskResult.factors.length > 0) {
-        doc.text(`Risk Factors: ${riskResult.factors.join(', ')}`, 20, 137);
+      doc.text(`Primary Symptoms: ${selectedSymptoms.join(', ')}`, 20, yPosition);
+      yPosition += 7;
+      doc.text(`Severity Level: ${symptomDetails.severity || 'Not specified'}/10`, 20, yPosition);
+      yPosition += 7;
+      doc.text(`Duration: ${symptomDetails.duration || 'Not specified'}`, 20, yPosition);
+      yPosition += 7;
+      
+      if (symptomDetails.details) {
+        doc.text(`Additional Details: ${symptomDetails.details}`, 20, yPosition);
+        yPosition += 7;
       }
+    } else {
+      doc.text("No symptoms reported", 20, yPosition);
+      yPosition += 7;
+    }
+    yPosition += 10;
+    
+    // Risk Assessment Section
+    if (consultationResponse?.riskAssessment) {
+      doc.setTextColor(220, 38, 127); // Pink/Red color for risk assessment
+      doc.setFontSize(14);
+      doc.setFont("helvetica", "bold");
+      doc.text("Risk Assessment", 14, yPosition);
+      yPosition += 10;
+      
+      doc.setTextColor(0, 0, 0); // Black color for content
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text(`Risk Level: ${consultationResponse.riskAssessment.level}`, 20, yPosition);
+      yPosition += 7;
+      doc.text(`Risk Score: ${consultationResponse.riskAssessment.score}/10`, 20, yPosition);
+      yPosition += 7;
+      
+      if (consultationResponse.riskAssessment.factors.length > 0) {
+        doc.text("Risk Factors:", 20, yPosition);
+        yPosition += 7;
+        consultationResponse.riskAssessment.factors.forEach((factor, index) => {
+          doc.text(`• ${factor}`, 25, yPosition);
+          yPosition += 7;
+        });
+      }
+      yPosition += 10;
     }
     
-    doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 270);
-    doc.save("e-likita-consultation-summary.pdf");
+    // Recommendations Section
+    if (consultationResponse?.recommendations && consultationResponse.recommendations.length > 0) {
+      doc.setTextColor(16, 185, 129); // Green color for recommendations
+      doc.setFontSize(14);
+      doc.setFont("helvetica", "bold");
+      doc.text("Personalized Recommendations", 14, yPosition);
+      yPosition += 10;
+      
+      doc.setTextColor(0, 0, 0); // Black color for content
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      consultationResponse.recommendations.forEach((recommendation, index) => {
+        const lines = doc.splitTextToSize(`• ${recommendation}`, 170);
+        lines.forEach((line: string) => {
+          if (yPosition > 280) {
+            doc.addPage();
+            yPosition = 20;
+          }
+          doc.text(line, 20, yPosition);
+          yPosition += 7;
+        });
+      });
+      yPosition += 10;
+    }
+    
+    // Urgency Assessment Section
+    if (consultationResponse?.urgency) {
+      doc.setTextColor(245, 158, 11); // Orange color for urgency
+      doc.setFontSize(14);
+      doc.setFont("helvetica", "bold");
+      doc.text("Urgency Assessment", 14, yPosition);
+      yPosition += 10;
+      
+      doc.setTextColor(0, 0, 0); // Black color for content
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text(`Timeframe: ${consultationResponse.urgency.timeframe}`, 20, yPosition);
+      yPosition += 7;
+      doc.text(`Immediate Attention Required: ${consultationResponse.urgency.requiresImmediateAttention ? 'Yes' : 'No'}`, 20, yPosition);
+      yPosition += 7;
+      
+      if (consultationResponse.urgency.instructions) {
+        doc.text("Instructions:", 20, yPosition);
+        yPosition += 7;
+        const instructionLines = doc.splitTextToSize(consultationResponse.urgency.instructions, 170);
+        instructionLines.forEach((line: string) => {
+          if (yPosition > 280) {
+            doc.addPage();
+            yPosition = 20;
+          }
+          doc.text(line, 20, yPosition);
+          yPosition += 7;
+        });
+      }
+      yPosition += 10;
+    }
+    
+    // Next Steps Section
+    if (consultationResponse?.nextSteps && consultationResponse.nextSteps.length > 0) {
+      if (yPosition > 250) {
+        doc.addPage();
+        yPosition = 20;
+      }
+      
+      doc.setTextColor(99, 102, 241); // Indigo color for next steps
+      doc.setFontSize(14);
+      doc.setFont("helvetica", "bold");
+      doc.text("Recommended Next Steps", 14, yPosition);
+      yPosition += 10;
+      
+      doc.setTextColor(0, 0, 0); // Black color for content
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      consultationResponse.nextSteps.forEach((step, index) => {
+        const lines = doc.splitTextToSize(`${index + 1}. ${step}`, 170);
+        lines.forEach((line: string) => {
+          if (yPosition > 280) {
+            doc.addPage();
+            yPosition = 20;
+          }
+          doc.text(line, 20, yPosition);
+          yPosition += 7;
+        });
+      });
+      yPosition += 10;
+    }
+    
+    // Footer disclaimer
+    if (yPosition > 260) {
+      doc.addPage();
+      yPosition = 20;
+    }
+    
+    doc.setTextColor(75, 85, 99); // Gray color for disclaimer
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.text("Important Notice", 14, yPosition);
+    yPosition += 10;
+    
+    doc.setTextColor(107, 114, 128); // Lighter gray for disclaimer text
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "normal");
+    const disclaimer = "This consultation is for guidance only and does not replace professional medical advice. Please consult with a qualified healthcare provider for proper diagnosis and treatment.";
+    const disclaimerLines = doc.splitTextToSize(disclaimer, 180);
+    disclaimerLines.forEach((line: string) => {
+      doc.text(line, 14, yPosition);
+      yPosition += 5;
+    });
+    
+    // Consultation ID if available
+    if (consultationResponse?.consultationId) {
+      yPosition += 5;
+      doc.setTextColor(128, 128, 128); // Gray color for consultation ID
+      doc.text(`Consultation ID: ${consultationResponse.consultationId}`, 14, yPosition);
+    }
+    
+    doc.save(`e-likita-consultation-${new Date().toISOString().split('T')[0]}.pdf`);
   }
 
   const currentTime = new Date().toLocaleString();
@@ -227,28 +410,36 @@ export default function Step5Summary() {
         </div>
       </div>
 
-      <div className="flex items-center justify-between pt-6 border-t border-gray-200 dark:border-gray-700">
+      {/* Button container - responsive layout */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-0 pt-6 border-t border-gray-200 dark:border-gray-700">
+        {/* Back button */}
         <button 
           onClick={() => setStep(5)} 
-          className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+          className="inline-flex items-center justify-center gap-2 px-4 py-3 sm:py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors order-3 sm:order-1"
         >
           ← Back
         </button>
-        <div className="flex gap-3">
+        
+        {/* Action buttons */}
+        <div className="flex flex-col sm:flex-row gap-3 order-1 sm:order-2">
           <button 
             onClick={downloadPdf} 
-            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+            className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 py-3 rounded-lg font-medium transition-colors min-h-[48px] sm:min-h-0"
           >
-            📄 Print/Save Summary
+            <span className="text-lg sm:hidden">📄</span>
+            <span className="hidden sm:inline">📄 Print/Save Summary</span>
+            <span className="sm:hidden">Print/Save</span>
           </button>
           <button 
             onClick={() => {
               localStorage.removeItem('consultation-progress');
               window.location.href = '/consultation';
             }}
-            className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+            className="inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 sm:px-6 py-3 rounded-lg font-medium transition-colors min-h-[48px] sm:min-h-0"
           >
-            🔄 Start New Consultation
+            <span className="text-lg sm:hidden">🔄</span>
+            <span className="hidden sm:inline">🔄 Start New Consultation</span>
+            <span className="sm:hidden">New Consultation</span>
           </button>
         </div>
       </div>
