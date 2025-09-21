@@ -113,7 +113,7 @@ export default function ConsultationsPage() {
               No Consultations Yet
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              You haven't completed any consultations yet. Start your first consultation to see it here.
+              You haven&apos;t completed any consultations yet. Start your first consultation to see it here.
             </p>
             <button
               onClick={() => window.location.href = '/consultation'}
