@@ -36,7 +36,7 @@ export default function Step1Intro() {
             <div>
               <h3 className="font-semibold text-lg mb-2">5-step guided consultation process</h3>
               <p className="text-gray-600 dark:text-gray-300 text-sm">
-                We'll walk you through each step to gather comprehensive information about your health.
+                We&apos;ll walk you through each step to gather comprehensive information about your health.
               </p>
             </div>
           </div>
