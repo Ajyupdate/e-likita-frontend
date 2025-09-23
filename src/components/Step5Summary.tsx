@@ -1,9 +1,11 @@
 "use client";
 import { useConsultation } from "@/context/ConsultationContext";
+import { useTranslation } from "@/context/LanguageContext";
 import jsPDF from "jspdf";
 
 export default function Step5Summary() {
   const { patient, selectedSymptoms, symptomDetails, riskResult, setStep, consultationResponse } = useConsultation();
+  const { t } = useTranslation();
 
   function downloadPdf() {
     const doc = new jsPDF();
@@ -231,25 +233,25 @@ export default function Step5Summary() {
   return (
     <div className="space-y-8">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Consultation Summary</h2>
-        <p className="text-gray-600 dark:text-gray-300">Review your consultation details below</p>
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{t('consultation.steps.summary.title')}</h2>
+        <p className="text-gray-600 dark:text-gray-300">{t('consultation.steps.summary.description')}</p>
       </div>
 
       <div className="grid gap-6">
         <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
           <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
             <span className="text-xl">👤</span>
-            Patient Information
+            {t('consultation.steps.summary.patientInfo')}
           </h3>
           <div className="grid sm:grid-cols-2 gap-4 text-sm">
-            <div><span className="font-medium">Name:</span> {patient.fullName}</div>
-            <div><span className="font-medium">Gender:</span> {patient.gender || 'Not specified'}</div>
-            <div><span className="font-medium">Age:</span> {patient.age || 'Not specified'}</div>
-            <div><span className="font-medium">Phone:</span> {patient.phone || 'Not specified'}</div>
+            <div><span className="font-medium">{t('consultation.steps.summary.name')}:</span> {patient.fullName}</div>
+            <div><span className="font-medium">{t('consultation.steps.summary.gender')}:</span> {patient.gender || t('consultation.steps.summary.notSpecified')}</div>
+            <div><span className="font-medium">{t('consultation.steps.summary.age')}:</span> {patient.age || t('consultation.steps.summary.notSpecified')}</div>
+            <div><span className="font-medium">{t('consultation.steps.summary.phone')}:</span> {patient.phone || t('consultation.steps.summary.notSpecified')}</div>
           </div>
           {patient.medicalHistory.length > 0 && (
             <div className="mt-4">
-              <span className="font-medium text-sm">Medical History:</span>
+              <span className="font-medium text-sm">{t('consultation.steps.summary.medicalHistory')}:</span>
               <div className="mt-2 flex flex-wrap gap-2">
                 {patient.medicalHistory.map((item, idx) => (
                   <span key={idx} className="bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs">
@@ -264,7 +266,7 @@ export default function Step5Summary() {
         <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
           <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
             <span className="text-xl">🩺</span>
-            Symptoms Reported
+            {t('consultation.steps.summary.symptomsReported')}
           </h3>
           {selectedSymptoms.length > 0 ? (
             <div className="space-y-3">
@@ -276,18 +278,18 @@ export default function Step5Summary() {
                 ))}
               </div>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div><span className="font-medium">Severity:</span> {symptomDetails.severity || 'Not specified'}/10</div>
-                <div><span className="font-medium">Duration:</span> {symptomDetails.duration || 'Not specified'}</div>
+                <div><span className="font-medium">{t('consultation.steps.summary.severity')}:</span> {symptomDetails.severity || t('consultation.steps.summary.notSpecified')}/10</div>
+                <div><span className="font-medium">{t('consultation.steps.summary.duration')}:</span> {symptomDetails.duration || t('consultation.steps.summary.notSpecified')}</div>
               </div>
               {symptomDetails.details && (
                 <div className="text-sm">
-                  <span className="font-medium">Additional Details:</span>
+                  <span className="font-medium">{t('consultation.steps.summary.additionalDetails')}:</span>
                   <p className="mt-1 text-gray-600 dark:text-gray-300">{symptomDetails.details}</p>
                 </div>
               )}
             </div>
           ) : (
-            <p className="text-gray-500 dark:text-gray-400">No symptoms reported</p>
+            <p className="text-gray-500 dark:text-gray-400">{t('consultation.steps.summary.noSymptomsReported')}</p>
           )}
         </div>
 
@@ -295,11 +297,11 @@ export default function Step5Summary() {
           <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
               <span className="text-xl">⚠️</span>
-              Risk Assessment
+              {t('consultation.steps.summary.riskAssessment')}
             </h3>
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <span className="font-medium">Risk Level:</span>
+                <span className="font-medium">{t('consultation.steps.summary.riskLevel')}:</span>
                 <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                   consultationResponse.riskAssessment.level === 'Emergency' ? 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-200' :
                   consultationResponse.riskAssessment.level === 'High' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-200' :
@@ -308,11 +310,11 @@ export default function Step5Summary() {
                 }`}>
                   {consultationResponse.riskAssessment.level}
                 </span>
-                <span className="text-sm text-gray-500">Score: {consultationResponse.riskAssessment.score}/10</span>
+                <span className="text-sm text-gray-500">{t('consultation.steps.summary.riskScore')}: {consultationResponse.riskAssessment.score}/10</span>
               </div>
               {consultationResponse.riskAssessment.factors.length > 0 && (
                 <div>
-                  <span className="font-medium">Risk Factors:</span>
+                  <span className="font-medium">{t('consultation.steps.summary.riskFactors')}:</span>
                   <ul className="mt-2 list-disc list-inside text-sm text-gray-600 dark:text-gray-300">
                     {consultationResponse.riskAssessment.factors.map((factor, idx) => (
                       <li key={idx}>{factor}</li>
@@ -328,7 +330,7 @@ export default function Step5Summary() {
           <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
               <span className="text-xl">💡</span>
-              Personalized Recommendations
+              {t('consultation.steps.summary.personalizedRecommendations')}
             </h3>
             <ul className="space-y-2 text-sm">
               {consultationResponse.recommendations.map((recommendation, idx) => (
@@ -349,11 +351,11 @@ export default function Step5Summary() {
           }`}>
             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
               <span className="text-xl">⏰</span>
-              Urgency Assessment
+              {t('consultation.steps.summary.urgencyAssessment')}
             </h3>
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <span className="font-medium">Timeframe:</span>
+                <span className="font-medium">{t('consultation.steps.summary.timeframe')}:</span>
                 <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                   consultationResponse.urgency.requiresImmediateAttention 
                     ? 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-200'
@@ -364,7 +366,7 @@ export default function Step5Summary() {
               </div>
               {consultationResponse.urgency.instructions && (
                 <div>
-                  <span className="font-medium">Instructions:</span>
+                  <span className="font-medium">{t('consultation.steps.summary.instructions')}:</span>
                   <p className="mt-1 text-sm text-gray-700 dark:text-gray-300">
                     {consultationResponse.urgency.instructions}
                   </p>
@@ -377,16 +379,16 @@ export default function Step5Summary() {
         <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
           <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
             <span className="text-xl">📋</span>
-            Next Actions
+            {t('consultation.steps.summary.nextActions')}
           </h3>
           <div className="space-y-3 text-sm">
             <p className="text-orange-800 dark:text-orange-200 bg-orange-50 dark:bg-orange-950/30 p-3 rounded-lg">
-              <strong>Important:</strong> This consultation is for guidance only and does not replace professional medical advice.
+              <strong>{t('consultation.steps.summary.importantNotice')}:</strong> {t('consultation.steps.summary.importantNoticeText')}
             </p>
             
             {consultationResponse?.nextSteps && consultationResponse.nextSteps.length > 0 && (
               <div>
-                <h4 className="font-medium mb-2">Recommended Next Steps:</h4>
+                <h4 className="font-medium mb-2">{t('consultation.steps.summary.recommendedNextSteps')}:</h4>
                 <ul className="space-y-1 text-sm">
                   {consultationResponse.nextSteps.map((step, idx) => (
                     <li key={idx} className="flex items-start gap-2">
@@ -400,11 +402,11 @@ export default function Step5Summary() {
             
             {consultationResponse?.riskAssessment?.level === 'Emergency' && (
               <p className="text-red-800 dark:text-red-200 bg-red-50 dark:bg-red-950/30 p-3 rounded-lg">
-                <strong>⚠️ Urgent Medical Attention Required:</strong> Based on your symptoms, you should seek immediate medical attention. Please visit the emergency department or call emergency services.
+                <strong>{t('consultation.steps.summary.urgentMedicalAttention')}</strong> {t('consultation.steps.summary.urgentMedicalText')}
               </p>
             )}
             <div className="text-gray-600 dark:text-gray-300">
-              <p><strong>Consultation Time:</strong> {currentTime}</p>
+              <p><strong>{t('consultation.steps.summary.consultationTime')}:</strong> {currentTime}</p>
             </div>
           </div>
         </div>
@@ -414,10 +416,10 @@ export default function Step5Summary() {
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-0 pt-6 border-t border-gray-200 dark:border-gray-700">
         {/* Back button */}
         <button 
-          onClick={() => setStep(5)} 
+          onClick={() => setStep(4)} 
           className="inline-flex items-center justify-center gap-2 px-4 py-3 sm:py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors order-3 sm:order-1"
         >
-          ← Back
+          ← {t('consultation.steps.summary.buttons.back')}
         </button>
         
         {/* Action buttons */}
@@ -427,8 +429,8 @@ export default function Step5Summary() {
             className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 py-3 rounded-lg font-medium transition-colors min-h-[48px] sm:min-h-0"
           >
             <span className="text-lg sm:hidden">📄</span>
-            <span className="hidden sm:inline">📄 Print/Save Summary</span>
-            <span className="sm:hidden">Print/Save</span>
+            <span className="hidden sm:inline">📄 {t('consultation.steps.summary.buttons.download')}</span>
+            <span className="sm:hidden">{t('consultation.steps.summary.buttons.download')}</span>
           </button>
           <button 
             onClick={() => {
@@ -438,8 +440,8 @@ export default function Step5Summary() {
             className="inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 sm:px-6 py-3 rounded-lg font-medium transition-colors min-h-[48px] sm:min-h-0"
           >
             <span className="text-lg sm:hidden">🔄</span>
-            <span className="hidden sm:inline">🔄 Start New Consultation</span>
-            <span className="sm:hidden">New Consultation</span>
+            <span className="hidden sm:inline">🔄 {t('consultation.steps.summary.buttons.newConsultation')}</span>
+            <span className="sm:hidden">{t('consultation.steps.summary.buttons.newConsultation')}</span>
           </button>
         </div>
       </div>

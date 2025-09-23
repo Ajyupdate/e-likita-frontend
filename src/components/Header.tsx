@@ -4,10 +4,13 @@ import Link from "next/link";
 import { User, LogOut, History, ChevronDown, Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import AuthModal from "./AuthModal";
+import LanguageSwitcher from "./LanguageSwitcher";
 import { useAuth } from "@/context/AuthContext";
+import { useTranslation } from "@/context/LanguageContext";
 
 export default function Header() {
   const { user, logout } = useAuth();
+  const { t } = useTranslation();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -26,11 +29,7 @@ export default function Header() {
             
             {/* Desktop navigation */}
             <div className="hidden md:flex items-center gap-3">
-              <select className="h-9 rounded-md border border-gray-200 dark:border-gray-700 bg-transparent px-2 text-sm">
-                <option>English</option>
-                <option>العربية</option>
-                <option>Français</option>
-              </select>
+              <LanguageSwitcher />
               <ThemeToggle />
               
               {user ? (
@@ -54,7 +53,7 @@ export default function Header() {
                         onClick={() => setShowUserMenu(false)}
                       >
                         <History className="h-4 w-4" />
-                        Consultation History
+                        {t('common.consultationHistory')}
                       </Link>
                       <button
                         onClick={() => {
@@ -64,7 +63,7 @@ export default function Header() {
                         className="w-full flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-red-600 dark:text-red-400"
                       >
                         <LogOut className="h-4 w-4" />
-                        Sign Out
+                        {t('common.signOut')}
                       </button>
                     </div>
                   )}
@@ -75,12 +74,12 @@ export default function Header() {
                   className="flex items-center gap-2 px-3 sm:px-4 py-2 text-sm font-medium border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                 >
                   <User className="h-4 w-4" />
-                  <span className="hidden sm:inline">Sign In</span>
+                  <span className="hidden sm:inline">{t('common.signIn')}</span>
                 </button>
               )}
               
               <Link href="/consultation" className="inline-flex items-center justify-center rounded-md bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-4 py-2 text-sm font-medium transition">
-                <span className="hidden sm:inline">Start Consultation</span>
+                <span className="hidden sm:inline">{t('common.startConsultation')}</span>
                 <span className="sm:hidden">Start</span>
               </Link>
             </div>
@@ -103,11 +102,7 @@ export default function Header() {
             <div className="md:hidden border-t border-gray-200 dark:border-gray-700 py-4 space-y-3">
               {/* Language selector */}
               <div className="px-2">
-                <select className="w-full h-10 rounded-md border border-gray-200 dark:border-gray-700 bg-transparent px-3 text-sm">
-                  <option>English</option>
-                  <option>العربية</option>
-                  <option>Français</option>
-                </select>
+                <LanguageSwitcher />
               </div>
 
               {/* User section */}
@@ -125,7 +120,7 @@ export default function Header() {
                     onClick={() => setShowMobileMenu(false)}
                   >
                     <History className="h-5 w-5" />
-                    Consultation History
+                    {t('common.consultationHistory')}
                   </Link>
                   <button
                     onClick={() => {
@@ -135,7 +130,7 @@ export default function Header() {
                     className="w-full flex items-center gap-3 px-3 py-2 text-sm rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-red-600 dark:text-red-400"
                   >
                     <LogOut className="h-5 w-5" />
-                    Sign Out
+                    {t('common.signOut')}
                   </button>
                 </div>
               ) : (
@@ -148,7 +143,7 @@ export default function Header() {
                     className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                   >
                     <User className="h-5 w-5" />
-                    Sign In
+                    {t('common.signIn')}
                   </button>
                 </div>
               )}
@@ -160,7 +155,7 @@ export default function Header() {
                   className="w-full inline-flex items-center justify-center gap-2 rounded-md bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 text-sm font-medium transition"
                   onClick={() => setShowMobileMenu(false)}
                 >
-                  Start Consultation
+                  {t('common.startConsultation')}
                 </Link>
               </div>
             </div>

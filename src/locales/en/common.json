@@ -1,0 +1,244 @@
+{
+  "common": {
+    "startConsultation": "Start Consultation",
+    "learnMore": "Learn More",
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "consultationHistory": "Consultation History",
+    "backToHome": "Back to Home",
+    "important": "Important",
+    "privacy": "Privacy",
+    "security": "Security",
+    "trusted": "Trusted",
+    "language": "Language"
+  },
+  "home": {
+    "title": "e-Likita Hospital Consultation Assistant",
+    "subtitle": "Healthcare Assistant Guided Triage",
+    "description": "This guided consultation will help assess your symptoms and provide appropriate healthcare recommendations.",
+    "disclaimer": "This tool is for guidance only and does not replace professional medical advice. In case of emergency, call emergency services immediately.",
+    "whatToExpect": "What to Expect:",
+    "stepProcess": "5-step guided consultation process",
+    "steps": {
+      "intro": {
+        "title": "Intro",
+        "description": "Welcome and overview"
+      },
+      "patientInfo": {
+        "title": "Patient Info",
+        "description": "Personal details and medical history"
+      },
+      "symptoms": {
+        "title": "Symptoms",
+        "description": "Symptom assessment and severity"
+      },
+      "followups": {
+        "title": "Follow-ups",
+        "description": "Dynamic questions based on symptoms"
+      },
+      "summary": {
+        "title": "Summary",
+        "description": "Consultation summary and recommendations"
+      }
+    },
+    "privacySection": {
+      "title": "Your Privacy Matters",
+      "description": "Data is encrypted in transit and at rest. Only authorized healthcare professionals can access your medical records.",
+      "features": {
+        "encryption": {
+          "title": "End-to-End Encryption",
+          "description": "Your data is protected with military-grade encryption"
+        },
+        "professionals": {
+          "title": "Licensed Professionals",
+          "description": "Reviewed by certified healthcare providers"
+        },
+        "hipaa": {
+          "title": "HIPAA Compliant",
+          "description": "Meets healthcare privacy and security standards"
+        }
+      }
+    },
+    "features": {
+      "privacy": "🔒 HIPAA-inspired privacy",
+      "secure": "🛡️ Secure",
+      "trusted": "✅ Trusted by healthcare professionals"
+    }
+  },
+      "consultations": {
+        "title": "Consultation History",
+        "subtitle": "View and manage your previous medical consultations",
+        "authenticationRequired": "Authentication Required",
+        "signInToView": "Please sign in to view your consultation history.",
+        "goToHome": "Go to Home",
+        "noConsultationsYet": "No Consultations Yet",
+        "noConsultationsDescription": "You haven't completed any consultations yet. Start your first consultation to see it here.",
+        "startConsultation": "Start Consultation",
+        "patient": "Patient",
+        "unknown": "Unknown",
+        "risk": "Risk",
+        "score": "Score",
+        "reportedSymptoms": "Reported Symptoms:",
+        "completed": "Completed",
+        "inProgress": "In Progress",
+        "viewDetails": "View Details",
+        "failedToFetch": "Failed to fetch consultations"
+      },
+      "consultation": {
+    "title": "Consultation",
+    "stepIndicator": {
+      "step": "Step",
+      "of": "of",
+      "steps": {
+        "intro": "Introduction",
+        "patientInfo": "Patient Info",
+        "symptoms": "Symptoms",
+        "followups": "Follow-ups",
+        "summary": "Summary"
+      }
+    },
+    "steps": {
+      "intro": {
+        "title": "Welcome to e-Likita Consultation",
+        "subtitle": "Let's get started with your medical consultation",
+        "description": "This guided consultation will help assess your symptoms and provide appropriate healthcare recommendations. The process takes about 5-10 minutes.",
+        "disclaimer": "This tool is for guidance only and does not replace professional medical advice. In case of emergency, call emergency services immediately.",
+        "startButton": "Start Consultation",
+        "features": {
+          "secure": "🔒 Secure & Private",
+          "guided": "📋 Guided Process",
+          "professional": "👨‍⚕️ Professional Review"
+        },
+        "whatToExpect": {
+          "title": "What to Expect:",
+          "guidedProcess": "5-step guided consultation process",
+          "guidedProcessDesc": "We'll walk you through each step to gather comprehensive information about your health.",
+          "symptomAssessment": "Symptom assessment and risk evaluation",
+          "symptomAssessmentDesc": "Advanced assessment tools to understand your symptoms and potential risks.",
+          "personalizedRecommendations": "Personalized healthcare recommendations",
+          "personalizedRecommendationsDesc": "Tailored advice based on your specific symptoms and medical history.",
+          "printableSummary": "Printable summary for your records",
+          "printableSummaryDesc": "Complete consultation summary you can save or share with your healthcare provider."
+        }
+      },
+      "patientInfo": {
+        "title": "Patient Information",
+        "subtitle": "Tell us about yourself",
+        "description": "Please provide your basic information and medical history to help us provide better recommendations.",
+        "form": {
+          "firstName": "First Name",
+          "lastName": "Last Name",
+          "fullName": "Full Name",
+          "age": "Age",
+          "dateOfBirth": "Date of Birth",
+          "gender": "Gender",
+          "phone": "Phone Number",
+          "email": "Email Address",
+          "medicalHistory": "Medical History",
+          "currentMedications": "Current Medications",
+          "allergies": "Allergies",
+          "medications": "Current Medications",
+          "emergencyContact": "Emergency Contact",
+          "emergencyContactName": "Contact Name",
+          "emergencyContactPhone": "Contact Phone",
+          "emergencyContactRelationship": "Relationship"
+        },
+        "buttons": {
+          "next": "Next Step",
+          "back": "Previous Step"
+        }
+      },
+      "symptoms": {
+        "title": "Symptom Assessment",
+        "subtitle": "Describe your symptoms",
+        "description": "Please select the symptoms you're experiencing and rate their severity.",
+        "selectSymptoms": "Select Symptoms",
+        "selectAllThatApply": "(Select all that apply)",
+        "severity": "Severity",
+        "duration": "Duration",
+        "details": "Additional Details",
+        "noSymptomsSelected": "Please select at least one symptom to continue.",
+        "severityLevels": {
+          "mild": "Mild",
+          "moderate": "Moderate",
+          "severe": "Severe"
+        },
+        "durationOptions": {
+          "lessThanHour": "Less than 1 hour",
+          "fewHours": "Few hours",
+          "oneDay": "1 day",
+          "fewDays": "Few days",
+          "oneWeek": "1 week",
+          "moreThanWeek": "More than 1 week"
+        },
+        "buttons": {
+          "next": "Continue",
+          "back": "Previous Step"
+        }
+      },
+      "followups": {
+        "title": "Follow-up Questions",
+        "subtitle": "Additional information needed",
+        "description": "Based on your symptoms, we have some additional questions to help provide better recommendations.",
+        "noQuestions": "No additional questions needed at this time.",
+        "completeAssessment": "Complete Assessment",
+        "processing": "Processing...",
+        "buttons": {
+          "next": "Continue",
+          "back": "Previous Step"
+        }
+      },
+      "summary": {
+        "title": "Consultation Summary",
+        "subtitle": "Review your consultation",
+        "description": "Please review your consultation details and recommendations.",
+        "patientInfo": "Patient Information",
+        "symptoms": "Symptoms",
+        "symptomsReported": "Symptoms Reported",
+        "riskAssessment": "Risk Assessment",
+        "personalizedRecommendations": "Personalized Recommendations",
+        "urgencyAssessment": "Urgency Assessment",
+        "nextActions": "Next Actions",
+        "recommendations": "Recommendations",
+        "riskLevel": "Risk Level",
+        "riskScore": "Risk Score",
+        "riskFactors": "Risk Factors",
+        "timeframe": "Timeframe",
+        "instructions": "Instructions",
+        "immediateAttentionRequired": "Immediate Attention Required",
+        "recommendedNextSteps": "Recommended Next Steps",
+        "consultationComplete": "Consultation Complete",
+        "thankYou": "Thank you for completing your consultation.",
+        "consultationTime": "Consultation Time",
+        "importantNotice": "Important Notice",
+        "importantNoticeText": "This consultation is for guidance only and does not replace professional medical advice.",
+        "urgentMedicalAttention": "⚠️ Urgent Medical Attention Required:",
+        "urgentMedicalText": "Based on your symptoms, you should seek immediate medical attention. Please visit the emergency department or call emergency services.",
+        "riskLevels": {
+          "low": "Low Risk",
+          "medium": "Medium Risk",
+          "high": "High Risk",
+          "emergency": "Emergency"
+        },
+        "severity": "Severity",
+        "duration": "Duration",
+        "additionalDetails": "Additional Details",
+        "name": "Name",
+        "gender": "Gender",
+        "age": "Age",
+        "phone": "Phone",
+        "medicalHistory": "Medical History",
+        "notSpecified": "Not specified",
+        "notProvided": "Not provided",
+        "noSymptomsReported": "No symptoms reported",
+        "yes": "Yes",
+        "no": "No",
+        "buttons": {
+          "download": "Download PDF",
+          "newConsultation": "New Consultation",
+          "back": "Previous Step"
+        }
+      }
+    }
+  }
+}
