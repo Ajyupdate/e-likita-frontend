@@ -10,11 +10,13 @@ import Step3SymptomsForm from "@/components/Step2SymptomsForm";
 import Step4Followups from "@/components/Step3Followups";
 import Step5Summary from "@/components/Step5Summary";
 import { useConsultation } from "@/context/ConsultationContext";
+import { useTranslation } from "@/context/LanguageContext";
 import { AnimatePresence, motion } from "framer-motion";
 import DarkModeTest from "../darkmode/page";
 
 export default function Consultation() {
   const { resolvedTheme } = useTheme();
+  const { t } = useTranslation();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -29,8 +31,8 @@ export default function Consultation() {
       
         <div className="max-w-5xl mx-auto px-6 py-10">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold">Consultation</h1>
-          <Link href="/" className="text-sm text-blue-600 hover:underline">Back to Home</Link>
+          <h1 className="text-2xl font-semibold">{t('consultation.title')}</h1>
+          <Link href="/" className="text-sm text-blue-600 hover:underline">{t('common.backToHome')}</Link>
         </div>
         <div className="mt-6">
           <StepIndicator />

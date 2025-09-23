@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { useTranslation } from "@/context/LanguageContext";
 import { useThemeSync } from "@/hooks/useThemeSync";
 import { apiGet } from "@/lib/api";
 import { Calendar, Clock, AlertTriangle, CheckCircle, FileText } from "lucide-react";
@@ -25,6 +26,7 @@ interface Consultation {
 
 export default function ConsultationsPage() {
   const { user, isLoading } = useAuth();
+  const { t } = useTranslation();
   const [consultations, setConsultations] = useState<Consultation[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -42,7 +44,7 @@ export default function ConsultationsPage() {
       const data = await apiGet<Consultation[]>(`/consultations/patient/${user?.userId}`);
       setConsultations(data);
     } catch (err: any) {
-      setError(err.message || "Failed to fetch consultations");
+      setError(err.message || t('consultations.failedToFetch'));
     } finally {
       setLoading(false);
     }
@@ -72,16 +74,16 @@ export default function ConsultationsPage() {
         <div className="max-w-md mx-auto text-center p-8">
           <AlertTriangle className="h-16 w-16 text-yellow-500 mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            Authentication Required
+            {t('consultations.authenticationRequired')}
           </h1>
           <p className="text-gray-600 dark:text-gray-300 mb-6">
-            Please sign in to view your consultation history.
+            {t('consultations.signInToView')}
           </p>
           <button
             onClick={() => window.location.href = '/'}
             className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
           >
-            Go to Home
+            {t('consultations.goToHome')}
           </button>
         </div>
       </div>
@@ -93,10 +95,10 @@ export default function ConsultationsPage() {
       <div className="max-w-4xl mx-auto px-6">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Consultation History
+            {t('consultations.title')}
           </h1>
           <p className="text-gray-600 dark:text-gray-300">
-            View and manage your previous medical consultations
+            {t('consultations.subtitle')}
           </p>
         </div>
 
@@ -110,16 +112,16 @@ export default function ConsultationsPage() {
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 text-center">
             <FileText className="h-16 w-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-              No Consultations Yet
+              {t('consultations.noConsultationsYet')}
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              You haven&apos;t completed any consultations yet. Start your first consultation to see it here.
+              {t('consultations.noConsultationsDescription')}
             </p>
             <button
               onClick={() => window.location.href = '/consultation'}
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
             >
-              Start Consultation
+              {t('consultations.startConsultation')}
             </button>
           </div>
         ) : (
@@ -135,13 +137,13 @@ export default function ConsultationsPage() {
                       {consultation.consultationNumber}
                     </h3>
                     <p className="text-sm text-gray-600 dark:text-gray-300">
-                      Patient: {consultation.steps.patientInfo?.fullName || 'Unknown'}
+                      {t('consultations.patient')}: {consultation.steps.patientInfo?.fullName || t('consultations.unknown')}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
                     {consultation.steps.riskAssessment && (
                       <span className={`px-3 py-1 rounded-full text-xs font-medium ${getRiskColor(consultation.steps.riskAssessment.level)}`}>
-                        {consultation.steps.riskAssessment.level} Risk
+                        {consultation.steps.riskAssessment.level} {t('consultations.risk')}
                       </span>
                     )}
                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${
@@ -149,7 +151,7 @@ export default function ConsultationsPage() {
                         ? 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200' 
                         : 'bg-gray-100 text-gray-800 dark:bg-gray-900/50 dark:text-gray-200'
                     }`}>
-                      {consultation.status}
+                      {consultation.status === 'completed' ? t('consultations.completed') : t('consultations.inProgress')}
                     </span>
                   </div>
                 </div>
@@ -166,7 +168,7 @@ export default function ConsultationsPage() {
                   {consultation.steps.riskAssessment && (
                     <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
                       <AlertTriangle className="h-4 w-4" />
-                      Score: {consultation.steps.riskAssessment.score}/10
+                      {t('consultations.score')}: {consultation.steps.riskAssessment.score}/10
                     </div>
                   )}
                 </div>
@@ -174,7 +176,7 @@ export default function ConsultationsPage() {
                 {consultation.steps.symptoms && consultation.steps.symptoms.length > 0 && (
                   <div className="mb-4">
                     <h4 className="text-sm font-medium text-gray-900 dark:text-white mb-2">
-                      Reported Symptoms:
+                      {t('consultations.reportedSymptoms')}
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {consultation.steps.symptoms.map((symptom, idx) => (
@@ -192,10 +194,10 @@ export default function ConsultationsPage() {
                 <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
                   <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
                     <CheckCircle className="h-4 w-4" />
-                    {consultation.completedAt ? `Completed ${new Date(consultation.completedAt).toLocaleDateString()}` : 'In Progress'}
+                    {consultation.completedAt ? `${t('consultations.completed')} ${new Date(consultation.completedAt).toLocaleDateString()}` : t('consultations.inProgress')}
                   </div>
                   <button className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium">
-                    View Details
+                    {t('consultations.viewDetails')}
                   </button>
                 </div>
               </div>

@@ -1,16 +1,19 @@
 "use client";
 import { useConsultation } from "@/context/ConsultationContext";
-
-const steps = [
-  { label: "Intro", icon: "👋" },
-  { label: "Patient Info", icon: "📋" },
-  { label: "Symptoms", icon: "🩺" },
-  { label: "Follow-ups", icon: "❓" },
-  { label: "Summary", icon: "📄" }
-];
+import { useTranslation } from "@/context/LanguageContext";
 
 export default function StepIndicator() {
   const { step } = useConsultation();
+  const { t } = useTranslation();
+  
+  const steps = [
+    { label: t('consultation.stepIndicator.steps.intro'), icon: "👋" },
+    { label: t('consultation.stepIndicator.steps.patientInfo'), icon: "📋" },
+    { label: t('consultation.stepIndicator.steps.symptoms'), icon: "🩺" },
+    { label: t('consultation.stepIndicator.steps.followups'), icon: "❓" },
+    { label: t('consultation.stepIndicator.steps.summary'), icon: "📄" }
+  ];
+
   return (
     <nav className="mb-8">
       <ol className="grid gap-3 sm:grid-cols-5">

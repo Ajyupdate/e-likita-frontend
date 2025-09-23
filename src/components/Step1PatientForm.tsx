@@ -1,5 +1,6 @@
 "use client";
 import { useConsultation } from "@/context/ConsultationContext";
+import { useTranslation } from "@/context/LanguageContext";
 import { useEffect, useState } from "react";
 import { apiGet } from "@/lib/api";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -16,6 +17,7 @@ const schema = Yup.object({
 
 export default function Step2PatientForm() {
   const { patient, setPatient, setStep } = useConsultation();
+  const { t } = useTranslation();
   const [mhOptions, setMhOptions] = useState<{ key: string; label: string }[]>([]);
   useEffect(() => {
     apiGet<{ key: string; label: string }[]>("/reference/medical-history").then(setMhOptions).catch(console.error);
@@ -46,14 +48,14 @@ export default function Step2PatientForm() {
       {() => (
         <div className="space-y-6">
           <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Patient Information</h2>
-            <p className="text-gray-600 dark:text-gray-300">Please provide your personal details and medical history</p>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('consultation.steps.patientInfo.title')}</h2>
+            <p className="text-gray-600 dark:text-gray-300">{t('consultation.steps.patientInfo.description')}</p>
           </div>
           
           <Form className="grid gap-6 sm:grid-cols-2">
             <div className="sm:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Full Name <span className="text-red-500">*</span>
+                {t('consultation.steps.patientInfo.form.fullName')} <span className="text-red-500">*</span>
               </label>
               <Field 
                 name="fullName" 
@@ -63,7 +65,7 @@ export default function Step2PatientForm() {
               <ErrorMessage name="fullName" component="div" className="text-sm text-red-600 mt-1" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Age</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('consultation.steps.patientInfo.form.age')}</label>
               <Field 
                 type="number" 
                 name="age" 
@@ -72,7 +74,7 @@ export default function Step2PatientForm() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Gender</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('consultation.steps.patientInfo.form.gender')}</label>
               <Field 
                 as="select" 
                 name="gender" 
@@ -85,7 +87,7 @@ export default function Step2PatientForm() {
               </Field>
             </div>
             <div className="sm:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Phone Number</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('consultation.steps.patientInfo.form.phone')}</label>
               <Field 
                 name="phone" 
                 className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-4 py-3 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800" 
@@ -93,7 +95,7 @@ export default function Step2PatientForm() {
               />
             </div>
           <div className="sm:col-span-2">
-            <label className="block text-sm font-medium">Medical History</label>
+            <label className="block text-sm font-medium">{t('consultation.steps.patientInfo.form.medicalHistory')}</label>
             <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
               {mhOptions.map((mh) => (
                 <label key={mh.key} className="inline-flex items-center gap-2">
@@ -104,19 +106,19 @@ export default function Step2PatientForm() {
             </div>
           </div>
           <div className="sm:col-span-2">
-            <label className="block text-sm font-medium">Known Allergies</label>
+            <label className="block text-sm font-medium">{t('consultation.steps.patientInfo.form.allergies')}</label>
             <Field as="textarea" name="allergies" rows={2} className="mt-1 w-full rounded-md border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2" />
           </div>
           <div className="sm:col-span-2">
-            <label className="block text-sm font-medium">Current Medications</label>
+            <label className="block text-sm font-medium">{t('consultation.steps.patientInfo.form.medications')}</label>
             <Field as="textarea" name="medications" rows={2} className="mt-1 w-full rounded-md border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2" />
           </div>
           <div>
-            <label className="block text-sm font-medium">Emergency Contact Name</label>
+            <label className="block text-sm font-medium">{t('consultation.steps.patientInfo.form.emergencyContactName')}</label>
             <Field name="emergencyContactName" className="mt-1 w-full rounded-md border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2" />
           </div>
           <div>
-            <label className="block text-sm font-medium">Emergency Contact Phone</label>
+            <label className="block text-sm font-medium">{t('consultation.steps.patientInfo.form.emergencyContactPhone')}</label>
             <Field name="emergencyContactPhone" className="mt-1 w-full rounded-md border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2" />
           </div>
             <div className="sm:col-span-2 mt-6 flex items-center justify-between">
@@ -125,13 +127,13 @@ export default function Step2PatientForm() {
                 onClick={() => setStep(1)} 
                 className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
               >
-                ← Back
+                ← {t('consultation.steps.patientInfo.buttons.back')}
               </button>
               <button 
                 type="submit" 
                 className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
               >
-                Next →
+                {t('consultation.steps.patientInfo.buttons.next')} →
               </button>
             </div>
         </Form>
